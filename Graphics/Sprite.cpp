@@ -30,11 +30,16 @@ void Sprite::Render() {
 	//Rendering
 	glColor4f(1, 1, 1, 1);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);    glVertex2f(0, 0);
-	glTexCoord2f(1, 0);    glVertex2f(texture.getWidth(), 0);
-	glTexCoord2f(1, 1);    glVertex2f(texture.getWidth(), texture.getHeight());
-	glTexCoord2f(0, 1);    glVertex2f(0, texture.getHeight());
+	glTexCoord2i(0, 0);    glVertex2i(0, 0);
+	glTexCoord2i(1, 0);    glVertex2i(texture.getWidth(), 0);
+	glTexCoord2i(1, 1);    glVertex2i(texture.getWidth(), texture.getHeight());
+	glTexCoord2i(0, 1);    glVertex2i(0, texture.getHeight());
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
+}
+
+void Sprite::SetPos(float x, float y){
+	xPos = x;
+	yPos = y;
 }

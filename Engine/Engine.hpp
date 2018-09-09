@@ -8,12 +8,9 @@
 class Engine : public Elog{
 private:
 	static GLFWwindow* window;
-	unsigned long time_start_ms;
 public:
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
-	
-	unsigned long get_current_time();     //returns time in ms elapsed since engine start
 
 	bool initialize(char* windowTitle);  //creates window
 	void Update();

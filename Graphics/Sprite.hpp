@@ -20,6 +20,8 @@ public:
 
 	void Update();
 	void Render();
+
+	void SetPos(float x, float y);
 };
 
 #endif //FIRSTGAME_SPRITE

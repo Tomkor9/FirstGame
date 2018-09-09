@@ -37,3 +37,19 @@ void Mouse::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 
 double Mouse::getMouseX() { return x; }
 double Mouse::getMouseY() { return y; }
+
+bool Mouse::ButtonDown(int button) {
+	bool cache = buttonsDown[button];
+	buttonsDown[button] = false;
+	return cache;
+}
+
+bool Mouse::ButtonUp(int button) {
+	bool cache = buttonsUp[button];
+	buttonsUp[button] = false;
+	return cache;
+}
+
+bool Mouse::Button(int button) {
+	return buttons[button];
+}
