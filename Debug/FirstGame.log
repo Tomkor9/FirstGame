@@ -1,4 +1,0 @@
-﻿  FirstGame.cpp
-f:\visual studio projects\projects\firstgame\firstgame\source\firstgame.cpp(25): warning C4244: 'initializing': conversion from 'double' to 'unsigned long', possible loss of data
-f:\visual studio projects\projects\firstgame\firstgame\source\firstgame.cpp(37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  FirstGame.vcxproj -> F:\Visual Studio PROJECTS\Projects\FirstGame\Debug\FirstGame.exe
