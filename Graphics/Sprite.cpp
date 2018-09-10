@@ -1,18 +1,23 @@
 #include "Sprite.hpp"
 
+//====CONSTRUCTORS
+
 Sprite::Sprite(){
 	xPos = 0; yPos = 0; rot = 0; xScale = 1; yScale = 1;
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
 	texture = Texture();   //redundant empty constructor
 }
 
 Sprite::Sprite(std::string imagePath) {
 	xPos = 0; yPos = 0;; rot = 0; xScale = 1; yScale = 1;
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
 	texture = Texture(imagePath);
 }
 
 Sprite::Sprite(std::string imagePath, float _xPos, float _yPos,
 	float _rot, float _xScale, float _yScale) {
-
+	
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
 	xPos = _xPos;
 	yPos = _yPos;
 	rot = _rot;
@@ -27,9 +32,21 @@ Sprite::Sprite(std::string imagePath, float _xPos, float _yPos,
 	texture = Texture(imagePath);
 }
 
-void Sprite::Update() {
-	
+Sprite::~Sprite() {
+	std::cout << "Destroyed sprite (texture id:" << texture.getID() << ")\n";
 }
+
+//====UPDATE LOGIC
+
+void Sprite::Update() {
+	if (inMotion == true) {
+		xPos += xSpeed;
+		yPos += ySpeed;
+		xScale += zSpeed;
+		yScale += zSpeed;
+}}
+
+//====RENDER LOGIC
 
 void Sprite::Render() {
 	glEnable(GL_TEXTURE_2D);
@@ -54,6 +71,9 @@ void Sprite::Render() {
 	glDisable(GL_TEXTURE_2D);
 }
 
+//====METHODS
+
+//MANIPULATION
 void Sprite::SetPos(float x, float y){
 	xPos = x;
 	yPos = y;
@@ -74,4 +94,33 @@ void Sprite::SetScale(float xy) {
 
 void Sprite::SetScale(float x, float y) {
 	xScale = x; yScale = y;
+}
+
+//MOVEMENT
+void Sprite::SetSpeed(float x, float y, float z) {
+	xSpeed = x;
+	ySpeed = y;
+	zSpeed = z;
+	UpdateMotionStatus();
+}
+
+/* "xyz" - stop in all directions (default)
+   "xz", "xy", ... - stop in multible axes
+   "x", "y", "z" - stop in given axis  */
+void Sprite::StopSpeed(std::string flags) {
+	for (char c = 0; c < flags.size(); c++) {
+		switch (flags.at(c)) {
+		case 'x': xSpeed = 0; break;
+		case 'y': ySpeed = 0; break;
+		case 'z': zSpeed = 0; break;
+		default: break;
+		}
+		UpdateMotionStatus();
+}}
+
+void Sprite::UpdateMotionStatus() {
+	if (xSpeed == 0 && ySpeed == 0 && zSpeed == 0)
+		inMotion = false;
+	else
+		inMotion = true;
 }

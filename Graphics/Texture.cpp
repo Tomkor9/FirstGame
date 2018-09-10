@@ -15,6 +15,10 @@ Texture::Texture(std::string path) {
 		std::cout << "Error loading image: " << path << "\n";  //INSERT ELOG HERE
 }
 
+Texture::~Texture() {
+
+}
+
 bool Texture::GetTextureParams(){
 
 	if (id > 0){

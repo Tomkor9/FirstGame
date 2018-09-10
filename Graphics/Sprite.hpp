@@ -4,9 +4,6 @@
 #include "GLFW/glfw3.h"
 #include "Texture.hpp"
 
-#include <iostream>
-#include <string>
-
 class Sprite {
 private:
 	Texture texture;
@@ -16,8 +13,14 @@ private:
 	float xScale;
 	float yScale;
 
+	float xSpeed;
+	float ySpeed;
+	float zSpeed;
+
 public:
+	bool inMotion;
 	Sprite();
+	~Sprite();
 	Sprite(std::string imagePath);
 	Sprite(std::string imagePath, float _xPos, float _yPos, float _rot = 0, float _xScale = 1, float _yScale = 1);
 
@@ -29,6 +32,10 @@ public:
 	void SetRotBy(float rotation);   //rotate by degrees relatively (adding rotation value)
 	void SetScale(float xy);         //symetric scale
 	void SetScale(float x, float y); //asymetric scale
+	
+	void SetSpeed(float x = 0, float y = 0, float z = 0); // pixels per frame (can be fraction)
+	void StopSpeed(std::string flags = "xyz");
+	void UpdateMotionStatus();
 };
 
 #endif //FIRSTGAME_SPRITE

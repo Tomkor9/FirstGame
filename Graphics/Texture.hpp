@@ -4,8 +4,8 @@
 #include "GLFW/glfw3.h"
 #include "SOIL/src/SOIL.h"
 
-#include <iostream>
 #include <string>
+#include <iostream>
 
 class Texture
 {
@@ -17,6 +17,7 @@ private:
 	bool GetTextureParams();
 public:
 	Texture();
+	~Texture();
 	Texture(int _id);
 	Texture(std::string path);
 

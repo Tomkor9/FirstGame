@@ -16,63 +16,82 @@ int main()
 	//SPRITES INITIALIZATION:
 	Sprite sky = Sprite("Assets/sky.jpg", 0, 0);
 	Sprite plane = Sprite("Assets/F22.png", 0, 0);
-	Sprite cloud = Sprite("Assets/cloud.png");
+	Sprite cloud1 = Sprite("Assets/cloud.png", 800, -300);
+	Sprite cloud2 = Sprite("Assets/cloud.png", 3000, 200, 180, 5, 5);
 	Sprite lel = Sprite("Assets/lel.png", 700, 200, 180);
 
 	//GAME LOOP
 	const int TICKS_PER_SECOND = 60;
 	const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-	const int MAX_FRAMESKIP = 15;
+	const int MAX_FRAMESKIP = 5;
+	const int MAX_FPS = 120;
 
-	unsigned long next_game_tick = glfwGetTime() * 1000;
+	unsigned int next_game_tick = glfwGetTime() * 1000;  //24,85 days to overflow
 	int loops;
+	float interpolation;
+
 	bool game_is_running = true;
 
 	//TESTING
-	int speed = 0;  //cloud speed
-	
-	/* --- static assetes actions: --- */
-	sky.Update();
-	lel.Update();
-	//---------------------------
+	cloud1.SetSpeed(-1,-0.2,0.02);
+	cloud2.SetSpeed(-0.5,0.2);
 
+	//ACTUAL GAME LOOP:
 	while (game_is_running) {
 		loops = 0;
-		while ((glfwGetTime() * 1000) > next_game_tick && loops < MAX_FRAMESKIP)
+			
+
+		//---------------------------
+		while (glfwGetTime() * 1000 > next_game_tick && loops < MAX_FRAMESKIP)
 		{
-			engine.Update();
-			/* --- dynamic assetes actions: --- */
-			
-			cloud.Update();
-			plane.Update();	
+			/* --- game input: --- */
 			plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
-			if (speed < 1800)
-				cloud.SetPos(1100 - (speed++), 400);
-			else
-				speed = 0;
 
-			//---------------------------
-			engine.BeginRender();
-			/* --- assetes render: --- */
+			/* --- assets logic update: --- */		
+			engine.Update();
+
+			sky.Update();
+			lel.Update();
+			cloud1.Update();
+			cloud2.Update();
+			plane.Update();
+			if (next_game_tick > 3000)
+				cloud1.StopSpeed("z");
 			
-			sky.Render();
-			lel.Render();
-			plane.Render();
-			cloud.Render();
-
-
 			//---------------------------
-			engine.EndRender();
 			next_game_tick += SKIP_TICKS;
 			loops++;
 		}
+		interpolation = float(glfwGetTime() + SKIP_TICKS - next_game_tick)
+			/ float(SKIP_TICKS);
+		//display_game(interpolation);
+		engine.BeginRender();
+		/* --- assetes render: --- */
+			
+		sky.Render();
+		lel.Render();
+		plane.Render();
+		cloud1.Render();
+		cloud2.Render();
+
+		//---------------------------
+		engine.EndRender();
 	}
 	std::cin.get();
     return 0;
 }
 
-/* Usefull functions */
-/*
-	plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
+
+
+
+
+
+/* =======================================================================
+Usefull functions:
+
+//mouse picture hover
+	plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   
+
+
 
 */
