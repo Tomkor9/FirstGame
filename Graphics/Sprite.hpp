@@ -30,8 +30,10 @@ public:
 	void SetPos(float x, float y);
 	void SetRotTo(float rotation);   //rotate by degrees ABS (setting rotation value)
 	void SetRotBy(float rotation);   //rotate by degrees relatively (adding rotation value)
-	void SetScale(float xy);         //symetric scale
-	void SetScale(float x, float y); //asymetric scale
+	void SetScaleTo(float xy);         //symetric scale
+	void SetScaleTo(float x, float y); //asymetric scale
+	void SetScaleBy(float xy);         
+	void SetScaleBy(float x, float y); 
 	
 	void SetSpeed(float x = 0, float y = 0, float z = 0); // pixels per frame (can be fraction)
 	void StopSpeed(std::string flags = "xyz");

@@ -30,8 +30,8 @@ void Mouse::MouseButtonCallback(GLFWwindow* window, int button, int action, int 
 		buttonsUp[button] = true;
 	}
 	//button state update
-	//if wasn't released state is true
-	//it it was released state is false
+	//if wasn't RELEASEd state is true
+	//it it was RELEASEd state is false
 	buttons[button] = action != GLFW_RELEASE; 
 }
 
@@ -50,6 +50,6 @@ bool Mouse::ButtonUp(int button) {
 	return cache;
 }
 
-bool Mouse::Button(int button) {
+bool Mouse::ButtonPressed(int button) {
 	return buttons[button];
 }

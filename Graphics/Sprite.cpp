@@ -87,13 +87,22 @@ void Sprite::SetRotBy(float rotation) {
 	rot += rotation;
 }
 
-void Sprite::SetScale(float xy) {
+void Sprite::SetScaleTo(float xy) {
 	xScale = xy;
 	yScale = xy;
 }
 
-void Sprite::SetScale(float x, float y) {
+void Sprite::SetScaleTo(float x, float y) {
 	xScale = x; yScale = y;
+}
+
+void Sprite::SetScaleBy(float xy) {
+	xScale += xy;
+	yScale += xy;
+}
+
+void Sprite::SetScaleBy(float x, float y) {
+	xScale += x; yScale += y;
 }
 
 //MOVEMENT

@@ -3,6 +3,7 @@
 #include "../Engine/Engine.hpp"
 #include "../Graphics/Sprite.hpp"
 #include "../Engine/IO/Mouse.hpp"
+#include "../Engine/IO/Keyboard.hpp"
 //#include "../Engine/Timer.hpp"
 
 #include <iostream>
@@ -47,6 +48,24 @@ int main()
 			/* --- game input: --- */
 			plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
 
+			//mouse
+			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+				lel.SetRotBy(1);
+			else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+				lel.SetRotBy(-1);
+			else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3))
+				lel.SetSpeed(0, 0, 0.01);
+			else if (Mouse::ButtonUp(GLFW_MOUSE_BUTTON_3))
+				lel.StopSpeed();
+
+			//keyboard
+			if (Keyboard::KeyPressed(GLFW_KEY_EQUAL))
+				plane.SetScaleBy(0.01);
+			if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
+				plane.SetScaleBy(-0.01);
+
+			//---------------------------
+
 			/* --- assets logic update: --- */		
 			engine.Update();
 
@@ -89,9 +108,20 @@ int main()
 /* =======================================================================
 Usefull functions:
 
-//mouse picture hover
-	plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   
+//mouse
+if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+lel.SetRotBy(1);
+else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
+lel.SetRotBy(-1);
+else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3))
+lel.SetSpeed(0, 0, 0.01);
+else if (Mouse::ButtonUp(GLFW_MOUSE_BUTTON_3))
+lel.StopSpeed();
 
-
+//keyboard
+if (Keyboard::KeyPressed(GLFW_KEY_EQUAL))
+plane.SetScaleBy(0.01);
+if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
+plane.SetScaleBy(-0.01);
 
 */

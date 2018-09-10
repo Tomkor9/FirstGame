@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include "IO\Mouse.hpp"
+#include "IO\Keyboard.hpp"
 #include <iostream>
 
 //STATIC members initialization
@@ -30,9 +31,10 @@ bool Engine::initialize(char* windowTitle) {
 	glfwGetFramebufferSize(window, &width, &height);
 	glfwSwapInterval(1); //render one frame ahead to swap (eliminates flickering)
 
-	//mouse handling
+	//Input handling
 	glfwSetCursorPosCallback(window, Mouse::MousePosCallback);
 	glfwSetMouseButtonCallback(window, Mouse::MouseButtonCallback);
+	glfwSetKeyCallback(window, Keyboard::KeyCallback);
 
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor()); //gets display res
 	int xPos = (mode->width - SCREEN_WIDTH) / 2;     //center position x of monitor

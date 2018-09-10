@@ -21,7 +21,7 @@ public:
 
 	static bool ButtonDown(int button);  //int button - which button
 	static bool ButtonUp(int button);
-	static bool Button(int button);      //current status true (up), false (down)
+	static bool ButtonPressed(int button);      //current status true (up), false (down) [pressed]
 };
 
 #endif //FIRSTGAME_MOUSE
