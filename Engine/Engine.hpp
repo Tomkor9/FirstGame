@@ -2,7 +2,7 @@
 #define FIRSTGAME_ENGINE
 
 #include "ELog.hpp"
-#include "GLFW\glfw3.h"                //adding opengl
+#include "GLFW/glfw3.h"                //adding opengl
 #pragma comment(lib, "opengl32.lib")   //or: "-lopengl32.lib" in cmake
 
 class Engine : public Elog{

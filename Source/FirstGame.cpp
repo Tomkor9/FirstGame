@@ -14,8 +14,10 @@ int main()
 	engine.initialize("Game!"); 
 	
 	//SPRITES INITIALIZATION:
+	Sprite sky = Sprite("Assets/sky.jpg", 0, 0);
 	Sprite plane = Sprite("Assets/F22.png", 0, 0);
-	Sprite boom = Sprite("Assets/lel.png", 100, 100);
+	Sprite cloud = Sprite("Assets/cloud.png");
+	Sprite lel = Sprite("Assets/lel.png", 700, 200, 180);
 
 	//GAME LOOP
 	const int TICKS_PER_SECOND = 60;
@@ -24,24 +26,39 @@ int main()
 
 	unsigned long next_game_tick = glfwGetTime() * 1000;
 	int loops;
-
 	bool game_is_running = true;
+
+	//TESTING
+	int speed = 0;  //cloud speed
+	
+	/* --- static assetes actions: --- */
+	sky.Update();
+	lel.Update();
+	//---------------------------
+
 	while (game_is_running) {
 		loops = 0;
 		while ((glfwGetTime() * 1000) > next_game_tick && loops < MAX_FRAMESKIP)
 		{
 			engine.Update();
-			/* --- assetes update: --- */
-			boom.Update();
-			plane.Update();
-			plane.SetPos(Mouse::getMouseX(), Mouse::getMouseY());   //mouse picture hover
-
+			/* --- dynamic assetes actions: --- */
+			
+			cloud.Update();
+			plane.Update();	
+			plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
+			if (speed < 1800)
+				cloud.SetPos(1100 - (speed++), 400);
+			else
+				speed = 0;
 
 			//---------------------------
 			engine.BeginRender();
 			/* --- assetes render: --- */
-			boom.Render();
+			
+			sky.Render();
+			lel.Render();
 			plane.Render();
+			cloud.Render();
 
 
 			//---------------------------
@@ -54,3 +71,8 @@ int main()
     return 0;
 }
 
+/* Usefull functions */
+/*
+	plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
+
+*/
