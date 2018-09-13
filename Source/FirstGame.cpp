@@ -37,6 +37,9 @@ int main()
 	cloud1.SetSpeed(-1,-0.2,0.02);
 	cloud2.SetSpeed(-0.5,0.2);
 
+	float inputX, inputY, inputZ;
+	inputX = inputY = inputZ = 0.0F;
+
 	//ACTUAL GAME LOOP:
 	while (game_is_running) {
 		loops = 0;
@@ -46,7 +49,7 @@ int main()
 		while (glfwGetTime() * 1000 > next_game_tick && loops < MAX_FRAMESKIP)
 		{
 			/* --- game input: --- */
-			plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
+			//plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
 
 			//mouse
 			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
@@ -61,8 +64,16 @@ int main()
 			//keyboard
 			if (Keyboard::KeyPressed(GLFW_KEY_EQUAL))
 				plane.SetScaleBy(0.01);
-			if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
+			else if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
 				plane.SetScaleBy(-0.01);
+			else if (Keyboard::KeyPressed(GLFW_KEY_UP))
+				plane.ChangeSpeed(0, 0.5);
+			else if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
+				plane.ChangeSpeed(0, -0.5);
+			else if (Keyboard::KeyDown(GLFW_KEY_RIGHT))
+				plane.SetSpeed(5);
+			else if (Keyboard::KeyDown(GLFW_KEY_LEFT))
+				plane.SetSpeed(-5);
 
 			//---------------------------
 
@@ -109,6 +120,8 @@ int main()
 Usefull functions:
 
 //mouse
+plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
+
 if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 lel.SetRotBy(1);
 else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))

@@ -113,6 +113,13 @@ void Sprite::SetSpeed(float x, float y, float z) {
 	UpdateMotionStatus();
 }
 
+void Sprite::ChangeSpeed(float x, float y, float z) {
+	xSpeed += x;
+	ySpeed += y;
+	zSpeed += z;
+	UpdateMotionStatus();
+}
+
 /* "xyz" - stop in all directions (default)
    "xz", "xy", ... - stop in multible axes
    "x", "y", "z" - stop in given axis  */

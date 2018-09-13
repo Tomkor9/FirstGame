@@ -36,6 +36,7 @@ public:
 	void SetScaleBy(float x, float y); 
 	
 	void SetSpeed(float x = 0, float y = 0, float z = 0); // pixels per frame (can be fraction)
+	void ChangeSpeed(float x = 0, float y = 0, float z = 0);
 	void StopSpeed(std::string flags = "xyz");
 	void UpdateMotionStatus();
 };
