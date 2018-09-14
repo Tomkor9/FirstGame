@@ -1,4 +1,6 @@
 #include "Sprite.hpp"
+#include "../Engine/Engine.hpp"  //for interpolation: everything that is moving 
+                                 //must have delta time included
 
 //====CONSTRUCTORS
 
@@ -78,7 +80,7 @@ void Sprite::SetRotTo(float rotation) {
 }
 
 void Sprite::SetRotBy(float rotation) {
-	rot += rotation;
+	rot += rotation * Engine::GetDT();
 }
 
 void Sprite::SetScaleTo(float xy) {
@@ -91,12 +93,13 @@ void Sprite::SetScaleTo(float x, float y) {
 }
 
 void Sprite::SetScaleBy(float xy) {
-	xScale += xy;
-	yScale += xy;
+	xScale += xy * Engine::GetDT();;
+	yScale += xy * Engine::GetDT();;
 }
 
 void Sprite::SetScaleBy(float x, float y) {
-	xScale += x; yScale += y;
+	xScale += x * Engine::GetDT();
+	yScale += y * Engine::GetDT();
 }
 
 //MOVEMENT
@@ -120,7 +123,7 @@ void Sprite::SetSpeedBy(float x, float y, float z, float rot) {
    "xz", "xy", ... - stop in multible axes
    "x", "y", "z" - stop in given axis  */
 void Sprite::StopSpeed(std::string flags) {
-	for (char c = 0; c < flags.size(); c++) {
+	for (unsigned char c = 0; c < flags.size(); c++) {
 		switch (flags.at(c)) {
 		case 'x': xSpeed = 0; break;
 		case 'y': ySpeed = 0; break;
@@ -142,10 +145,10 @@ void Sprite::UpdateMotionStatus() {
 
 void Sprite::Update() {
 	if (inMotion == true) {
-		xPos += xSpeed;
-		yPos += ySpeed;
-		xScale += zSpeed;
-		yScale += zSpeed;
-		rot += rotSpeed;
+		xPos += xSpeed * Engine::GetDT();
+		yPos += ySpeed * Engine::GetDT();
+		xScale += zSpeed * Engine::GetDT();
+		yScale += zSpeed * Engine::GetDT();
+		rot += rotSpeed * Engine::GetDT();
 	}
 }

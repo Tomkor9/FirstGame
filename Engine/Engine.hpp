@@ -8,11 +8,15 @@
 class Engine : public Elog{
 private:
 	static GLFWwindow* window;
+	static double dt;                  //delta time
+	double pt;                         //previous time (time it gets to make a game loop)
 public:
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
+	static double GetDT();
 
 	bool initialize(char* windowTitle);  //creates window
+
 	void Update();
 	void BeginRender();
 	void EndRender();

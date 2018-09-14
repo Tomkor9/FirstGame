@@ -6,6 +6,7 @@
 //STATIC members initialization
 int Engine::SCREEN_WIDTH = 1024;
 int Engine::SCREEN_HEIGHT = 768;
+double Engine::dt = 0;
 GLFWwindow* Engine::window = nullptr;
 
 Engine::Engine(){}
@@ -55,20 +56,31 @@ bool Engine::initialize(char* windowTitle) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);  //fixed alpha effects handling
 												  //old with black artefacts: glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//Engine timer
+	glfwSetTime(0.0);                             //sets game engine timer to 0                           
+	pt = glfwGetTime();                           //pt equals current engine time
+
 	logInfo("Initialization successful", 0);
 	return true;
 }
 
+void Engine::Update() {                           //processing queued events like mouse drag etc.
+	
+	//Engine predicted frame (interpolation)
+	dt = (glfwGetTime() - pt);
+	pt = dt;
+	glfwPollEvents();
+}
+
 void Engine::BeginRender() {
-	glClearColor(0, 0, 0, 1); //clearing back buffer (color can be changed)
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clearing depth buffer
+	glClearColor(0, 0, 0, 1);                      //clearing back buffer (color can be changed)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);                 //clearing depth buffer
 }
 
 void Engine::EndRender() {
 	glfwSwapBuffers(window);
 }
 
-//processing queued events like mouse drag etc.
-void Engine::Update() {
-	glfwPollEvents(); 
+double Engine::GetDT() {
+	return dt;
 }
