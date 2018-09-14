@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\Engine.hpp" />
     <ClInclude Include="Engine\Elog.hpp" />
+    <ClInclude Include="Engine\IO\Keyboard.hpp" />
     <ClInclude Include="Engine\IO\Mouse.hpp" />
     <ClInclude Include="Engine\Timer.hpp" />
     <ClInclude Include="Graphics\Sprite.hpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Elog.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\IO\Keyboard.cpp" />
     <ClCompile Include="Engine\IO\Mouse.cpp" />
     <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />

@@ -4,20 +4,24 @@
 
 Sprite::Sprite(){
 	xPos = 0; yPos = 0; rot = 0; xScale = 1; yScale = 1;
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
+	inMotion = false;
 	texture = Texture();   //redundant empty constructor
 }
 
 Sprite::Sprite(std::string imagePath) {
 	xPos = 0; yPos = 0;; rot = 0; xScale = 1; yScale = 1;
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
+	inMotion = false;
 	texture = Texture(imagePath);
 }
 
 Sprite::Sprite(std::string imagePath, float _xPos, float _yPos,
 	float _rot, float _xScale, float _yScale) {
 	
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; inMotion = false;
+	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
+	inMotion = false;
+
 	xPos = _xPos;
 	yPos = _yPos;
 	rot = _rot;
@@ -35,16 +39,6 @@ Sprite::Sprite(std::string imagePath, float _xPos, float _yPos,
 Sprite::~Sprite() {
 	std::cout << "Destroyed sprite (texture id:" << texture.getID() << ")\n";
 }
-
-//====UPDATE LOGIC
-
-void Sprite::Update() {
-	if (inMotion == true) {
-		xPos += xSpeed;
-		yPos += ySpeed;
-		xScale += zSpeed;
-		yScale += zSpeed;
-}}
 
 //====RENDER LOGIC
 
@@ -106,21 +100,23 @@ void Sprite::SetScaleBy(float x, float y) {
 }
 
 //MOVEMENT
-void Sprite::SetSpeed(float x, float y, float z) {
+void Sprite::SetSpeedTo(float x, float y, float z, float rot) {
 	xSpeed = x;
 	ySpeed = y;
 	zSpeed = z;
+	rotSpeed = rot;
 	UpdateMotionStatus();
 }
 
-void Sprite::ChangeSpeed(float x, float y, float z) {
+void Sprite::SetSpeedBy(float x, float y, float z, float rot) {
 	xSpeed += x;
 	ySpeed += y;
 	zSpeed += z;
+	rotSpeed += rot;
 	UpdateMotionStatus();
 }
 
-/* "xyz" - stop in all directions (default)
+/* "xyzr" - stop in all directions + rotation (default)
    "xz", "xy", ... - stop in multible axes
    "x", "y", "z" - stop in given axis  */
 void Sprite::StopSpeed(std::string flags) {
@@ -129,14 +125,27 @@ void Sprite::StopSpeed(std::string flags) {
 		case 'x': xSpeed = 0; break;
 		case 'y': ySpeed = 0; break;
 		case 'z': zSpeed = 0; break;
+		case 'r': rotSpeed = 0; break;
 		default: break;
 		}
 		UpdateMotionStatus();
 }}
 
 void Sprite::UpdateMotionStatus() {
-	if (xSpeed == 0 && ySpeed == 0 && zSpeed == 0)
+	if (xSpeed == 0 && ySpeed == 0 && zSpeed == 0 && rotSpeed == 0)
 		inMotion = false;
 	else
 		inMotion = true;
+}
+
+//====UPDATE LOGIC
+
+void Sprite::Update() {
+	if (inMotion == true) {
+		xPos += xSpeed;
+		yPos += ySpeed;
+		xScale += zSpeed;
+		yScale += zSpeed;
+		rot += rotSpeed;
+	}
 }

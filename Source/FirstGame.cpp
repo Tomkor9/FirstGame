@@ -34,11 +34,9 @@ int main()
 	bool game_is_running = true;
 
 	//TESTING
-	cloud1.SetSpeed(-1,-0.2,0.02);
-	cloud2.SetSpeed(-0.5,0.2);
-
-	float inputX, inputY, inputZ;
-	inputX = inputY = inputZ = 0.0F;
+	cloud1.SetSpeedTo(-1,-0.2,0.02);
+	cloud2.SetSpeedTo(-0.5,0.2);
+	lel.SetSpeedTo(0, 0, 0, 1);
 
 	//ACTUAL GAME LOOP:
 	while (game_is_running) {
@@ -51,31 +49,30 @@ int main()
 			/* --- game input: --- */
 			//plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
 
+
 			//mouse
 			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
-				lel.SetRotBy(1);
+				plane.SetRotBy(1);
 			else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
-				lel.SetRotBy(-1);
-			else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3))
-				lel.SetSpeed(0, 0, 0.01);
-			else if (Mouse::ButtonUp(GLFW_MOUSE_BUTTON_3))
-				lel.StopSpeed();
+				plane.SetRotBy(-1);
+			else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3)) {
+				plane.SetPos(0, 0);
+				plane.StopSpeed();
+				plane.SetRotTo(0);
+			}
+				
 
 			//keyboard
-			if (Keyboard::KeyPressed(GLFW_KEY_EQUAL))
-				plane.SetScaleBy(0.01);
-			else if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
-				plane.SetScaleBy(-0.01);
-			else if (Keyboard::KeyPressed(GLFW_KEY_UP))
-				plane.ChangeSpeed(0, 0.5);
-			else if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
-				plane.ChangeSpeed(0, -0.5);
-			else if (Keyboard::KeyDown(GLFW_KEY_RIGHT))
-				plane.SetSpeed(5);
-			else if (Keyboard::KeyDown(GLFW_KEY_LEFT))
-				plane.SetSpeed(-5);
-
-			//---------------------------
+			if (Keyboard::KeyPressed(GLFW_KEY_UP))
+				plane.SetSpeedBy(0, 0.5);
+			if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
+				plane.SetSpeedBy(0, -0.5);
+			if (Keyboard::KeyPressed(GLFW_KEY_RIGHT))
+				plane.SetSpeedBy(0.5);
+			if (Keyboard::KeyPressed(GLFW_KEY_LEFT))
+				plane.SetSpeedBy(-0.5);
+			if (Keyboard::KeyPressed(GLFW_KEY_A))
+				plane.StopSpeed("yx");
 
 			/* --- assets logic update: --- */		
 			engine.Update();
@@ -136,5 +133,17 @@ if (Keyboard::KeyPressed(GLFW_KEY_EQUAL))
 plane.SetScaleBy(0.01);
 if (Keyboard::KeyPressed(GLFW_KEY_MINUS))
 plane.SetScaleBy(-0.01);
+
+
+if (Keyboard::KeyPressed(GLFW_KEY_UP))
+plane.ChangeSpeed(0, 0.5);
+if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
+plane.ChangeSpeed(0, -0.5);
+if (Keyboard::KeyPressed(GLFW_KEY_RIGHT))
+plane.ChangeSpeed(0.5);
+if (Keyboard::KeyPressed(GLFW_KEY_LEFT))
+plane.ChangeSpeed(-0.5);
+if (Keyboard::KeyPressed(GLFW_KEY_A))
+plane.StopSpeed("yx");
 
 */

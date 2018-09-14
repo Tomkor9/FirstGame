@@ -16,9 +16,9 @@ private:
 	float xSpeed;
 	float ySpeed;
 	float zSpeed;
+	float rotSpeed;
 
 public:
-	bool inMotion;
 	Sprite();
 	~Sprite();
 	Sprite(std::string imagePath);
@@ -35,9 +35,10 @@ public:
 	void SetScaleBy(float xy);         
 	void SetScaleBy(float x, float y); 
 	
-	void SetSpeed(float x = 0, float y = 0, float z = 0); // pixels per frame (can be fraction)
-	void ChangeSpeed(float x = 0, float y = 0, float z = 0);
-	void StopSpeed(std::string flags = "xyz");
+	bool inMotion;
+	void SetSpeedTo(float x = 0, float y = 0, float z = 0, float rot = 0);  // pixels per frame (can be fraction)
+	void SetSpeedBy(float x = 0, float y = 0, float z = 0, float rot = 0);
+	void StopSpeed(std::string flags = "xyzr");
 	void UpdateMotionStatus();
 };
 
