@@ -40,6 +40,10 @@ public:
 	void SetSpeedBy(float x = 0, float y = 0, float z = 0, float rot = 0);
 	void StopSpeed(std::string flags = "xyzr");
 	void UpdateMotionStatus();
+	float GetValue(char flag);
+	float GetSpeed(char flag);
+
+	void ShowInfo();
 };
 
 #endif //FIRSTGAME_SPRITE

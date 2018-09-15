@@ -1,6 +1,7 @@
 #include "Sprite.hpp"
 #include "../Engine/Engine.hpp"  //for interpolation: everything that is moving 
                                  //must have delta time included
+#include <iomanip>
 
 //====CONSTRUCTORS
 
@@ -101,6 +102,41 @@ void Sprite::SetScaleBy(float x, float y) {
 	xScale += x;
 	yScale += y;
 }
+//RETURNIGN INFO
+
+//position: x,y,r; scale: a,b (a = scale x, b = scale y)
+float Sprite::GetValue(char flag) {
+	switch (flag)
+	{
+	case 'x': return xPos; break;
+	case 'y': return yPos; break;
+	case 'a': return xScale; break;
+	case 'b': return yScale; break;
+	case 'r': return rot; break;
+	default: return 0.0F;
+	}
+}
+
+//x, y, z (scale), r (rotation)
+float Sprite::GetSpeed(char flag) {
+	switch (flag)
+	{
+	case 'x': return xSpeed; break;
+	case 'y': return ySpeed; break;
+	case 'z': return zSpeed; break;
+	case 'r': return rotSpeed; break;
+	default: return 0.0F;
+	}
+}
+
+void Sprite::ShowInfo() {
+	std::cout << std::setprecision(5) <<
+		texture.getName() <<" ID "<< texture.getID() << "\n"
+		"xPos:" << xPos << " yPos:" << yPos <<
+		" xScale: " << xScale << " yScale: " << yScale << "\n" <<
+		"xSpeed: " << xSpeed << " ySpeed:" << ySpeed << "\n";
+}
+
 
 //MOVEMENT
 void Sprite::SetSpeedTo(float x, float y, float z, float rot) {

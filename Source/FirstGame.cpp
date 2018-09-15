@@ -6,8 +6,6 @@
 #include "../Engine/IO/Keyboard.hpp"
 //#include "../Engine/Timer.hpp"
 
-#include <iostream>
-
 int main()
 {
 	//ENGINE AND WINDOW
@@ -41,15 +39,15 @@ int main()
 	//ACTUAL GAME LOOP:
 	while (game_is_running) {
 		loops = 0;
-			
 
 		//---------------------------
 		while (glfwGetTime() * 1000 > next_game_tick && loops < MAX_FRAMESKIP)
 		{
+			/* --- log: --- */
+
 			/* --- game input: --- */
 			//plane.SetPos((float)Mouse::getMouseX(), (float)Mouse::getMouseY());   //mouse picture hover
-
-
+			
 			//mouse
 			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
 				plane.SetRotBy(1);
@@ -61,7 +59,6 @@ int main()
 				plane.SetRotTo(0);
 			}
 				
-
 			//keyboard
 			if (Keyboard::KeyPressed(GLFW_KEY_UP))
 				plane.SetSpeedBy(0, 0.5);
@@ -82,9 +79,7 @@ int main()
 			cloud1.Update();
 			cloud2.Update();
 			plane.Update();
-			if (next_game_tick > 3000)
-				cloud1.StopSpeed("z");
-			
+
 			//---------------------------
 			next_game_tick += SKIP_TICKS;
 			loops++;

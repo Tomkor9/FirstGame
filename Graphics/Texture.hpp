@@ -13,17 +13,19 @@ private:
 	int id;
 	int width;
 	int height;
+	std::string name;
 	
 	bool GetTextureParams();
 public:
 	Texture();
 	~Texture();
-	Texture(int _id);
+	Texture(int _id, std::string _name = "");
 	Texture(std::string path);
 
 	int getID();
 	int getWidth();
 	int getHeight();
+	std::string getName();
 };
 
 #endif //FIRSTGAME_TEXTURE
