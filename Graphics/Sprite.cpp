@@ -80,7 +80,7 @@ void Sprite::SetRotTo(float rotation) {
 }
 
 void Sprite::SetRotBy(float rotation) {
-	rot += rotation * Engine::GetDT();
+	rot += rotation;
 }
 
 void Sprite::SetScaleTo(float xy) {
@@ -93,13 +93,13 @@ void Sprite::SetScaleTo(float x, float y) {
 }
 
 void Sprite::SetScaleBy(float xy) {
-	xScale += xy * Engine::GetDT();;
-	yScale += xy * Engine::GetDT();;
+	xScale += xy;
+	yScale += xy;
 }
 
 void Sprite::SetScaleBy(float x, float y) {
-	xScale += x * Engine::GetDT();
-	yScale += y * Engine::GetDT();
+	xScale += x;
+	yScale += y;
 }
 
 //MOVEMENT
@@ -145,10 +145,10 @@ void Sprite::UpdateMotionStatus() {
 
 void Sprite::Update() {
 	if (inMotion == true) {
-		xPos += xSpeed * Engine::GetDT();
-		yPos += ySpeed * Engine::GetDT();
-		xScale += zSpeed * Engine::GetDT();
-		yScale += zSpeed * Engine::GetDT();
-		rot += rotSpeed * Engine::GetDT();
+		xPos += xSpeed;
+		yPos += ySpeed;
+		xScale += zSpeed;
+		yScale += zSpeed;
+		rot += rotSpeed;
 	}
 }
