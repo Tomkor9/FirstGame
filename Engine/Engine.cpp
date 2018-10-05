@@ -6,7 +6,6 @@
 //STATIC members initialization
 int Engine::SCREEN_WIDTH = 1024;
 int Engine::SCREEN_HEIGHT = 768;
-double Engine::dt = 0;
 GLFWwindow* Engine::window = nullptr;
 
 Engine::Engine(){}
@@ -15,14 +14,14 @@ Engine::~Engine() {}
 
 bool Engine::initialize(char* windowTitle) {
 	if (!glfwInit()) {
-		logInfo("Error initializing GLFW!", 1);
+		std::cout<<"Error initializing GLFW!\n";
 		return false;
 	}
 	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT,
 		windowTitle, nullptr, nullptr);
 
 	if (window == nullptr) {
-		logInfo("Error creating window!", 1);
+		std::cout << "Error creating a window!\n";
 		return false;
 	}
 
@@ -58,17 +57,12 @@ bool Engine::initialize(char* windowTitle) {
 												  //old with black artefacts: glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//Engine timer
 	glfwSetTime(0.0);                             //sets game engine timer to 0                           
-	pt = glfwGetTime();                           //pt equals current engine time
 
-	logInfo("Initialization successful", 0);
+	std::cout << "Initialization successful!\n";
 	return true;
 }
 
 void Engine::Update() {                           //processing queued events like mouse drag etc.
-	
-	//Engine predicted frame (interpolation)
-	dt = (glfwGetTime() - pt);
-	pt = dt;
 	glfwPollEvents();
 }
 
@@ -79,8 +73,4 @@ void Engine::BeginRender() {
 
 void Engine::EndRender() {
 	glfwSwapBuffers(window);
-}
-
-double Engine::GetDT() {
-	return dt;
 }

@@ -3,47 +3,49 @@
 
 #include "GLFW/glfw3.h"
 #include "Texture.hpp"
+#include "../Engine/Calculations/Vector2.hpp"
 
 class Sprite {
 private:
 	Texture texture;
-	float xPos;
-	float yPos;
+	
+	Vector2 pos;
+	Vector2 scale;
 	float rot;
-	float xScale;
-	float yScale;
 
-	float xSpeed;
-	float ySpeed;
-	float zSpeed;
+	bool inMotion = false;
+	Vector2 speed;
 	float rotSpeed;
 
 public:
 	Sprite();
 	~Sprite();
 	Sprite(std::string imagePath);
-	Sprite(std::string imagePath, float _xPos, float _yPos, float _rot = 0, float _xScale = 1, float _yScale = 1);
+	Sprite(std::string imagePath, Vector2 _pos);
 
 	void Update();
 	void Render();
 
-	void SetPos(float x, float y);
-	void SetRotTo(float rotation);   //rotate by degrees ABS (setting rotation value)
-	void SetRotBy(float rotation);   //rotate by degrees relatively (adding rotation value)
-	void SetScaleTo(float xy);         //symetric scale
-	void SetScaleTo(float x, float y); //asymetric scale
-	void SetScaleBy(float xy);         
-	void SetScaleBy(float x, float y); 
+	void SetPos(Vector2 _pos);
 	
-	bool inMotion;
-	void SetSpeedTo(float x = 0, float y = 0, float z = 0, float rot = 0);  // pixels per frame (can be fraction)
-	void SetSpeedBy(float x = 0, float y = 0, float z = 0, float rot = 0);
+	void SetRotTo(float rotation);     //rotate by degrees ABS (setting rotation value)
+	void SetRotBy(float rotation);     //rotate by degrees relatively (adding rotation value)
+	void SetRotSpeed(float rottion);
+	
+	void SetScaleTo(float xy);         //symetric scale
+	void SetScaleTo(Vector2 v);        //asymetric scale
+	void SetScaleBy(float xy);         
+	void SetScaleBy(Vector2 v);
+	
+	void SetSpeedTo(Vector2 _vec);     // pixels per game speed (can be fraction)
+	void SetSpeedBy(Vector2 _vec);
 	void StopSpeed(std::string flags = "xyzr");
+	
+	float GetValue(char flag);        //position: x,y,r; scale: a,b (a = scale x, b = scale y)
+	float GetSpeed(char flag);        //x, y, r (rotation)
 	void UpdateMotionStatus();
-	float GetValue(char flag);
-	float GetSpeed(char flag);
 
-	void ShowInfo();
+	void ShowInfo();                  // !! should be another class defining interface deriving from this
 };
 
 #endif //FIRSTGAME_SPRITE

@@ -1,41 +1,35 @@
 #include "Sprite.hpp"
-#include "../Engine/Engine.hpp"  //for interpolation: everything that is moving 
-                                 //must have delta time included
+#include "../Engine/Engine.hpp"
+                                
 #include <iomanip>
 
 //====CONSTRUCTORS
 
 Sprite::Sprite(){
-	xPos = 0; yPos = 0; rot = 0; xScale = 1; yScale = 1;
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
-	inMotion = false;
-	texture = Texture();   //redundant empty constructor
+	pos = Vector2();
+	scale = Vector2(1,1);
+	speed = Vector2(0, 0);
+	rot = 0;
+	rotSpeed = 0;
 }
 
 Sprite::Sprite(std::string imagePath) {
-	xPos = 0; yPos = 0;; rot = 0; xScale = 1; yScale = 1;
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
-	inMotion = false;
+	pos = Vector2();
+	scale = Vector2(1, 1);
+	speed = Vector2(0, 0);
+	rotSpeed = 0;
+	rot = 0;
 	texture = Texture(imagePath);
 }
 
-Sprite::Sprite(std::string imagePath, float _xPos, float _yPos,
-	float _rot, float _xScale, float _yScale) {
-	
-	xSpeed = 0; ySpeed = 0; zSpeed = 0; rotSpeed = 0;
-	inMotion = false;
+Sprite::Sprite(std::string imagePath, Vector2 _pos){
+	pos = _pos;
+	rot = 0;
 
-	xPos = _xPos;
-	yPos = _yPos;
-	rot = _rot;
-	if (_yScale != 1) {
-		xScale = _xScale;
-		yScale = _xScale;
-	}
-	else {
-		xScale = _xScale;
-		yScale = _yScale;
-	}	
+	speed = Vector2(0, 0);
+	rotSpeed = 0;
+
+	scale = Vector2(1, 1);
 	texture = Texture(imagePath);
 }
 
@@ -51,9 +45,9 @@ void Sprite::Render() {
 	glLoadIdentity();        //starting from empty identity matrix
 
 	//TRANSLATE, ROTATE, SCALE
-	glTranslatef(xPos, yPos, 0);
+	glTranslatef(pos.x, pos.y, 0);
 	glRotatef(rot, 0, 0, 1);
-	glScalef(xScale, yScale, 1);
+	glScalef(scale.x, scale.y, 1);
 	
 
 	//Rendering
@@ -71,9 +65,8 @@ void Sprite::Render() {
 //====METHODS
 
 //MANIPULATION
-void Sprite::SetPos(float x, float y){
-	xPos = x;
-	yPos = y;
+void Sprite::SetPos(Vector2 _pos){
+	pos = _pos;
 }
 
 void Sprite::SetRotTo(float rotation) {
@@ -85,22 +78,21 @@ void Sprite::SetRotBy(float rotation) {
 }
 
 void Sprite::SetScaleTo(float xy) {
-	xScale = xy;
-	yScale = xy;
+	scale.x = xy;
+	scale.y = xy;
 }
 
-void Sprite::SetScaleTo(float x, float y) {
-	xScale = x; yScale = y;
+void Sprite::SetScaleTo(Vector2 v) {
+	scale = v;
 }
 
 void Sprite::SetScaleBy(float xy) {
-	xScale += xy;
-	yScale += xy;
+	scale.x += xy;
+	scale.y += xy;
 }
 
-void Sprite::SetScaleBy(float x, float y) {
-	xScale += x;
-	yScale += y;
+void Sprite::SetScaleBy(Vector2 v) {
+	scale += v;
 }
 //RETURNIGN INFO
 
@@ -108,22 +100,21 @@ void Sprite::SetScaleBy(float x, float y) {
 float Sprite::GetValue(char flag) {
 	switch (flag)
 	{
-	case 'x': return xPos; break;
-	case 'y': return yPos; break;
-	case 'a': return xScale; break;
-	case 'b': return yScale; break;
+	case 'x': return pos.x; break;
+	case 'y': return pos.y; break;
+	case 'a': return scale.x; break;
+	case 'b': return scale.y; break;
 	case 'r': return rot; break;
 	default: return 0.0F;
 	}
 }
 
-//x, y, z (scale), r (rotation)
+//x, y, r (rotation)
 float Sprite::GetSpeed(char flag) {
 	switch (flag)
 	{
-	case 'x': return xSpeed; break;
-	case 'y': return ySpeed; break;
-	case 'z': return zSpeed; break;
+	case 'x': return speed.x; break;
+	case 'y': return speed.y; break;
 	case 'r': return rotSpeed; break;
 	default: return 0.0F;
 	}
@@ -131,39 +122,38 @@ float Sprite::GetSpeed(char flag) {
 
 void Sprite::ShowInfo() {
 	std::cout << std::setprecision(5) <<
-		texture.getName() <<" ID "<< texture.getID() << "\n"
-		"xPos:" << xPos << " yPos:" << yPos <<
-		" xScale: " << xScale << " yScale: " << yScale << "\n" <<
-		"xSpeed: " << xSpeed << " ySpeed:" << ySpeed << "\n";
+		texture.getName() << " ID " << texture.getID() << ":\n"
+		"POS x " << pos.x << " y " << pos.y << "\n" <<
+		"SCL x " << scale.x << " y " << scale.y << "\n" <<
+		"SPD" << inMotion << " x " << speed.x << " y " << speed.y << " r " << rotSpeed << "\n";
 }
 
 
 //MOVEMENT
-void Sprite::SetSpeedTo(float x, float y, float z, float rot) {
-	xSpeed = x;
-	ySpeed = y;
-	zSpeed = z;
-	rotSpeed = rot;
+
+void Sprite::SetRotSpeed(float rotation) {
+	rotSpeed = rotation;
 	UpdateMotionStatus();
 }
 
-void Sprite::SetSpeedBy(float x, float y, float z, float rot) {
-	xSpeed += x;
-	ySpeed += y;
-	zSpeed += z;
-	rotSpeed += rot;
+void Sprite::SetSpeedTo(Vector2 _vec) {
+	speed = _vec;
 	UpdateMotionStatus();
 }
 
-/* "xyzr" - stop in all directions + rotation (default)
+void Sprite::SetSpeedBy(Vector2 _vec) {
+	speed += _vec;
+	UpdateMotionStatus();
+}
+
+/* "xyr" - stop in all directions + rotation (default)
    "xz", "xy", ... - stop in multible axes
-   "x", "y", "z" - stop in given axis  */
+   "x", "y", "r" - stop in given axis  */
 void Sprite::StopSpeed(std::string flags) {
 	for (unsigned char c = 0; c < flags.size(); c++) {
 		switch (flags.at(c)) {
-		case 'x': xSpeed = 0; break;
-		case 'y': ySpeed = 0; break;
-		case 'z': zSpeed = 0; break;
+		case 'x': speed.x = 0; break;
+		case 'y': speed.y = 0; break;
 		case 'r': rotSpeed = 0; break;
 		default: break;
 		}
@@ -171,20 +161,14 @@ void Sprite::StopSpeed(std::string flags) {
 }}
 
 void Sprite::UpdateMotionStatus() {
-	if (xSpeed == 0 && ySpeed == 0 && zSpeed == 0 && rotSpeed == 0)
-		inMotion = false;
-	else
-		inMotion = true;
+	inMotion = !(speed.x == 0 && speed.y == 0 && rotSpeed == 0);
 }
 
 //====UPDATE LOGIC
 
 void Sprite::Update() {
 	if (inMotion == true) {
-		xPos += xSpeed;
-		yPos += ySpeed;
-		xScale += zSpeed;
-		yScale += zSpeed;
+		pos += speed;
 		rot += rotSpeed;
 	}
 }
