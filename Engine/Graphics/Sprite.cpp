@@ -1,40 +1,54 @@
 #include "Sprite.hpp"
-#include "../Engine/Engine.hpp"
+#include "../../Engine/Engine.hpp"
                                 
 #include <iomanip>
 
 //====CONSTRUCTORS
 
 Sprite::Sprite(){
+
+	texture = Texture();
 	pos = Vector2();
 	scale = Vector2(1,1);
-	speed = Vector2(0, 0);
-	rot = 0;
+	speed = Vector2(0,0);
+	size = Vector2(texture.getWidth(), texture.getHeight());
 	rotSpeed = 0;
+
+	rot = 0;
 }
 
 Sprite::Sprite(std::string imagePath) {
+	texture = Texture(imagePath);
 	pos = Vector2();
 	scale = Vector2(1, 1);
 	speed = Vector2(0, 0);
+	size = Vector2(texture.getWidth(), texture.getHeight());
 	rotSpeed = 0;
+	
 	rot = 0;
-	texture = Texture(imagePath);
 }
 
 Sprite::Sprite(std::string imagePath, Vector2 _pos){
+	
+	texture = Texture(imagePath);
 	pos = _pos;
 	rot = 0;
 
 	speed = Vector2(0, 0);
 	rotSpeed = 0;
 
+	//make elog
+	//printf("- created Sprite tex(%d) %s %d, %d\n",
+		//texture.getID(), texture.getName().c_str(), texture.getHeight(), texture.getWidth());
+
+	size = Vector2(texture.getWidth(), texture.getHeight());
 	scale = Vector2(1, 1);
-	texture = Texture(imagePath);
 }
 
 Sprite::~Sprite() {
-	std::cout << "Destroyed sprite (texture id:" << texture.getID() << ")\n";
+	//ELOG
+	std::cout << "Sprite(" << texture.getID() << "): "
+		      << texture.getName() << " - Destroyed\n";
 }
 
 //====RENDER LOGIC
@@ -97,7 +111,7 @@ void Sprite::SetScaleBy(Vector2 v) {
 //RETURNIGN INFO
 
 //position: x,y,r; scale: a,b (a = scale x, b = scale y)
-float Sprite::GetValue(char flag) {
+float Sprite::GetValue(char flag) const {
 	switch (flag)
 	{
 	case 'x': return pos.x; break;
@@ -110,7 +124,7 @@ float Sprite::GetValue(char flag) {
 }
 
 //x, y, r (rotation)
-float Sprite::GetSpeed(char flag) {
+float Sprite::GetSpeed(char flag) const {
 	switch (flag)
 	{
 	case 'x': return speed.x; break;
@@ -120,6 +134,27 @@ float Sprite::GetSpeed(char flag) {
 	}
 }
 
+// change it (public-private variables)
+Vector2 * Sprite::GetPos()
+{
+	return &pos;
+}
+
+float * Sprite::GetRot()
+{
+	return &rot;
+}
+
+Vector2 * Sprite::GetScale()
+{
+	return &scale;
+}
+
+Vector2 * Sprite::GetSize()
+{
+	return &size;
+}
+
 void Sprite::ShowInfo() {
 	std::cout << std::setprecision(5) <<
 		texture.getName() << " ID " << texture.getID() << ":\n"
@@ -127,7 +162,6 @@ void Sprite::ShowInfo() {
 		"SCL x " << scale.x << " y " << scale.y << "\n" <<
 		"SPD" << inMotion << " x " << speed.x << " y " << speed.y << " r " << rotSpeed << "\n";
 }
-
 
 //MOVEMENT
 

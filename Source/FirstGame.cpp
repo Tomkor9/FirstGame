@@ -1,10 +1,14 @@
 //================== ENTRY OF PROGRAM ==================
 
+//engine include
 #include "../Engine/Engine.hpp"
-#include "../Graphics/Sprite.hpp"
+#include "../Engine/Graphics/Sprite.hpp"
 #include "../Engine/IO/Mouse.hpp"
 #include "../Engine/IO/Keyboard.hpp"
 //#include "../Engine/Timer.hpp"
+
+//game include
+#include "../Game/GamePlayer.hpp"
 
 int main()
 {
@@ -19,6 +23,8 @@ int main()
 	Sprite cloud2 = Sprite("Assets/cloud.png", Vector2(1040, 500));
 	Sprite lel = Sprite("Assets/lel.png", Vector2(700, 200));
 
+	GamePlayer player(plane);
+
 	//GAME LOOP
 	const int TICKS_PER_SECOND = 60;
 	const int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -32,10 +38,10 @@ int main()
 
 	//TESTING
 	lel.SetRotTo(180);
+	lel.SetRotSpeed(1);
 	cloud1.SetSpeedTo(Vector2(-10, 0));
 	cloud2.SetSpeedTo(Vector2(-1, 0));
 	cloud2.SetScaleTo(5);
-	lel.SetRotSpeed(1);
 
 	//ACTUAL GAME LOOP:
 	while (game_is_running) {
@@ -45,39 +51,39 @@ int main()
 		while (glfwGetTime() * 1000 > next_game_tick && loops < MAX_FRAMESKIP)
 		{
 			/* --- log: --- */
-			cloud2.ShowInfo();
+			//cloud2.ShowInfo();
 
 			/* --- game input: --- */
 			
 			//mouse
 			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
-				plane.SetRotBy(1);
+				player.GetSprite().SetRotBy(1);
 			else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
-				plane.SetRotBy(-1);
+				player.GetSprite().SetRotBy(-1);
 			else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3)) {
-				plane.SetPos(Vector2());
-				plane.StopSpeed();
-				plane.SetRotTo(0);
+				player.GetSprite().SetPos(Vector2());
+				player.GetSprite().StopSpeed();
+				player.GetSprite().SetRotTo(0);
 			}
 				
 			//keyboard
 			if (Keyboard::KeyPressed(GLFW_KEY_UP))
-				plane.SetSpeedBy(Vector2(0, 0.5));
+				player.GetSprite().SetSpeedBy(Vector2(0, 0.5));
 			if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
-				plane.SetSpeedBy(Vector2(0, -0.5));
+				player.GetSprite().SetSpeedBy(Vector2(0, -0.5));
 			if (Keyboard::KeyPressed(GLFW_KEY_RIGHT))
-				plane.SetSpeedBy(Vector2(0.5, 0));
+				player.GetSprite().SetSpeedBy(Vector2(0.5, 0));
 			if (Keyboard::KeyPressed(GLFW_KEY_LEFT))
-				plane.SetSpeedBy(Vector2(-0.5, 0));
+				player.GetSprite().SetSpeedBy(Vector2(-0.5, 0));
 			if (Keyboard::KeyPressed(GLFW_KEY_A))
-				plane.StopSpeed("yx");
+				player.GetSprite().StopSpeed("yx");
 
 			/* --- assets logic update: --- */		
 			engine.Update();
 
 			if (cloud1.GetValue('x') < -500)
 				cloud1.SetPos(Vector2(1040, 300));
-			else if (cloud2.GetValue('x') < -1800)
+			else if (cloud2.GetValue('x') < -2200)
 				cloud2.SetPos(Vector2(1040, 100));
 
 			sky.Update();
@@ -85,7 +91,7 @@ int main()
 			lel.Update();
 			cloud2.Update();
 
-			plane.Update();
+			player.Update();
 
 			//---------------------------
 			next_game_tick += SKIP_TICKS;
@@ -101,7 +107,7 @@ int main()
 		sky.Render();
 		cloud2.Render();
 		lel.Render();
-		plane.Render();
+		player.Render();
 		cloud1.Render();
 
 		//---------------------------

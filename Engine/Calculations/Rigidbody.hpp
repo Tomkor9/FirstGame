@@ -12,14 +12,17 @@ private:
 	float gravity;
 	float friction;
 	Vector2 velocity;
+
+	bool borders;
 public:
 	Rigidbody();
-	void Initialize(float _gravity, float _friction, Vector2* _pos, float* rot, Vector2* _scale, Vector2* _size);
+	void Initialize(float _gravity, float _friction, Vector2 *_pos, float *_rot, Vector2 *_scale, Vector2 *_size);
 
 	void Update(); 
 	void Render(float R = 1.0F, float G = 0.0F, float B = 0.0F);
 
 	void AddForce(Vector2 force);
+	void DrawBorders(bool state);
 };
 
 

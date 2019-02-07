@@ -4,7 +4,7 @@ Texture::Texture() { id = -1; }
 
 Texture::Texture(int _id, std::string _name) {
 
-	if (!GetTextureParams()) 
+	if (!GetTextureParams())
 		std::cout << "Error loading image: " << id << "\n";  //INSERT ELOG HERE
 	id = _id; 
 	
@@ -35,11 +35,12 @@ Texture::~Texture() {
 
 bool Texture::GetTextureParams(){
 
-	if (id > 0){
+	if (id > 0)
+	{
 		int mipLevel = 0; //impage compression (mipmap)
 		glBindTexture(GL_TEXTURE_2D, id);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_WIDTH, &width);   //store loaded image width in &width
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &height); //store loaded image width in &width
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, mipLevel, GL_TEXTURE_HEIGHT, &height); //store loaded image width in &height
 		return true;    //INSERT ELOG HERE
 	}
 	return false;     //INSERT ELOG HERE

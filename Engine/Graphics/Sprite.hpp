@@ -3,12 +3,13 @@
 
 #include "GLFW/glfw3.h"
 #include "Texture.hpp"
-#include "../Engine/Calculations/Vector2.hpp"
+#include "../../Engine/Calculations/Vector2.hpp"
 
 class Sprite {
 private:
 	Texture texture;
-	
+	Vector2 size;
+
 	Vector2 pos;
 	Vector2 scale;
 	float rot;
@@ -34,18 +35,26 @@ public:
 	
 	void SetScaleTo(float xy);         //symetric scale
 	void SetScaleTo(Vector2 v);        //asymetric scale
-	void SetScaleBy(float xy);         
+	void SetScaleBy(float xy);
 	void SetScaleBy(Vector2 v);
 	
-	void SetSpeedTo(Vector2 _vec);     // pixels per game speed (can be fraction)
+	void SetSpeedTo(Vector2 _vec);     //pixels per game speed (can be fraction)
 	void SetSpeedBy(Vector2 _vec);
+
 	void StopSpeed(std::string flags = "xyzr");
 	
-	float GetValue(char flag);        //position: x,y,r; scale: a,b (a = scale x, b = scale y)
-	float GetSpeed(char flag);        //x, y, r (rotation)
+	float GetValue(char flag) const;         //position: x,y,r; scale: a,b (a = scale x, b = scale y)
+	float GetSpeed(char flag) const;         //x, y, r (rotation)
+
+	//exposes private side of class (needs to be changed)
+	Vector2 *GetPos();
+	float *GetRot();
+	Vector2 *GetScale();
+	Vector2 *GetSize();
+
 	void UpdateMotionStatus();
 
-	void ShowInfo();                  // !! should be another class defining interface deriving from this
+	void ShowInfo();                   // !! should be another class defining interface deriving from this
 };
 
 #endif //FIRSTGAME_SPRITE
