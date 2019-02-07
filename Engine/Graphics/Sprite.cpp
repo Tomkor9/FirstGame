@@ -37,10 +37,6 @@ Sprite::Sprite(std::string imagePath, Vector2 _pos){
 	speed = Vector2(0, 0);
 	rotSpeed = 0;
 
-	//make elog
-	//printf("- created Sprite tex(%d) %s %d, %d\n",
-		//texture.getID(), texture.getName().c_str(), texture.getHeight(), texture.getWidth());
-
 	size = Vector2(texture.getWidth(), texture.getHeight());
 	scale = Vector2(1, 1);
 }
@@ -53,7 +49,7 @@ Sprite::~Sprite() {
 
 //====RENDER LOGIC
 
-void Sprite::Render() {
+void Sprite::RenderSprite() {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture.getID());
 	glLoadIdentity();        //starting from empty identity matrix
@@ -108,6 +104,11 @@ void Sprite::SetScaleBy(float xy) {
 void Sprite::SetScaleBy(Vector2 v) {
 	scale += v;
 }
+
+void Sprite::SetSizeTo(Vector2 _size) {
+	size = _size;
+}
+
 //RETURNIGN INFO
 
 //position: x,y,r; scale: a,b (a = scale x, b = scale y)
@@ -134,33 +135,10 @@ float Sprite::GetAxisSpeed(char flag) const {
 	}
 }
 
-// change it (public-private variables)
-Vector2 * Sprite::GetPos()
+Texture Sprite::GetTexture() const
 {
-	return &pos;
+	return texture;
 }
-
-float * Sprite::GetRot()
-{
-	return &rot;
-}
-
-Vector2 * Sprite::GetScale()
-{
-	return &scale;
-}
-
-Vector2 * Sprite::GetSize()
-{
-	return &size;
-}
-
-Vector2 * Sprite::GetSpeed()
-{
-	return &speed;
-}
-
-//---------------------------------------
 
 void Sprite::ShowInfo() {
 	std::cout << std::setprecision(5) <<
@@ -207,7 +185,7 @@ void Sprite::UpdateMotionStatus() {
 
 //====UPDATE LOGIC
 
-void Sprite::Update() {
+void Sprite::UpdateSprite() {
 	if (inMotion == true) {
 		pos += speed;
 		rot += rotSpeed;

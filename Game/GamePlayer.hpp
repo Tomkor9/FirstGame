@@ -7,18 +7,15 @@
 class GamePlayer
 {
 private:
-
-	Sprite sprite;
 	Rigidbody rb;
 	
 public:
 	GamePlayer();
-	GamePlayer(Sprite& _sprite);
+	GamePlayer(const Sprite _sprite);
 	
 	void Update();
 	void Render();
 
-	Sprite& GetSprite();
 	Rigidbody& GetRB();
 };
 

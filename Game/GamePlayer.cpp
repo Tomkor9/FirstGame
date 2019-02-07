@@ -5,30 +5,32 @@ GamePlayer::GamePlayer()
 
 }
 
-GamePlayer::GamePlayer(Sprite& _sprite)
+GamePlayer::GamePlayer(const Sprite _sprite)
 {
-	sprite = _sprite;
-	rb.Initialize(0.01F, 1.01F, sprite.GetPos(), sprite.GetRot(),
-		sprite.GetScale(), sprite.GetSize(), sprite.GetSpeed());
+	//setup sprite-like
+	rb.SetPos(Vector2(_sprite.GetValue('x'), _sprite.GetValue('y')));
+	rb.SetScaleTo(Vector2(1, 1));
+	rb.SetSpeedTo(Vector2(0, 0));
+	rb.SetSizeTo(Vector2(_sprite.GetTexture().getWidth(), _sprite.GetTexture().getHeight()));
+	rb.SetRotTo(0.0F);
+	rb.SetRotSpeed(0.0F);
+
+	rb.SetFriction(1.0F);
+	rb.SetGravity(0.1F);
 }
 
 void GamePlayer::Update()
 {
-	sprite.Update();
-	rb.Update();
+	rb.UpdateSprite(); //update like sprite
+	rb.UpdateRB();
 }
 
 void GamePlayer::Render()
 {
-	sprite.Render();
-	rb.Render(0,0,0); //passing color 0,0,0 - black
+	rb.RenderSprite(); //render like sprite
+	rb.RenderRB(0,0,0); //passing color 0,0,0 - black
 }
 
-//Change it (just 4 debug)
-Sprite& GamePlayer::GetSprite()
-{
-	return sprite;
-}
 
 Rigidbody& GamePlayer::GetRB()
 {

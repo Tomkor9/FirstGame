@@ -57,26 +57,26 @@ int main()
 			
 			//mouse
 			if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
-				player.GetSprite().SetRotBy(1);
+				player.GetRB().SetRotBy(1);
 			else if (Mouse::ButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
-				player.GetSprite().SetRotBy(-1);
+				player.GetRB().SetRotBy(-1);
 			else if (Mouse::ButtonDown(GLFW_MOUSE_BUTTON_3)) {
-				player.GetSprite().SetPos(Vector2());
-				player.GetSprite().StopSpeed();
-				player.GetSprite().SetRotTo(0);
+				player.GetRB().SetPos(Vector2());
+				player.GetRB().StopSpeed();
+				player.GetRB().SetRotTo(0);
 			}
 				
 			//keyboard
 			if (Keyboard::KeyPressed(GLFW_KEY_UP))
-				player.GetSprite().SetSpeedBy(Vector2(0, 0.5));
+				player.GetRB().SetSpeedBy(Vector2(0, 0.5));
 			if (Keyboard::KeyPressed(GLFW_KEY_DOWN))
-				player.GetSprite().SetSpeedBy(Vector2(0, -0.5));
+				player.GetRB().SetSpeedBy(Vector2(0, -0.5));
 			if (Keyboard::KeyPressed(GLFW_KEY_RIGHT))
-				player.GetSprite().SetSpeedBy(Vector2(0.5, 0));
+				player.GetRB().SetSpeedBy(Vector2(0.5, 0));
 			if (Keyboard::KeyPressed(GLFW_KEY_LEFT))
-				player.GetSprite().SetSpeedBy(Vector2(-0.5, 0));
+				player.GetRB().SetSpeedBy(Vector2(-0.5, 0));
 			if (Keyboard::KeyPressed(GLFW_KEY_A))
-				player.GetSprite().StopSpeed("yx");
+				player.GetRB().StopSpeed("yx");
 
 			/* --- assets logic update: --- */		
 			engine.Update();
@@ -86,10 +86,10 @@ int main()
 			else if (cloud2.GetValue('x') < -2200)
 				cloud2.SetPos(Vector2(1040, 100));
 
-			sky.Update();
-			cloud1.Update();
-			lel.Update();
-			cloud2.Update();
+			sky.UpdateSprite();
+			cloud1.UpdateSprite();
+			lel.UpdateSprite();
+			cloud2.UpdateSprite();
 
 			player.Update();
 
@@ -104,11 +104,11 @@ int main()
 		engine.BeginRender();
 		/* --- assetes render: --- */
 			
-		sky.Render();
-		cloud2.Render();
-		lel.Render();
+		sky.RenderSprite();
+		cloud2.RenderSprite();
+		lel.RenderSprite();
 		player.Render();
-		cloud1.Render();
+		cloud1.RenderSprite();
 
 		//---------------------------
 		engine.EndRender();

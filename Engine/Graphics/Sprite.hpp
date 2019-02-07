@@ -6,26 +6,27 @@
 #include "../../Engine/Calculations/Vector2.hpp"
 
 class Sprite {
-private:
+protected:
 	Texture texture;
-	Vector2 size;
 
 	Vector2 pos;
-	Vector2 scale;
-	float rot;
-
-	bool inMotion = false;
+	Vector2 size;
 	Vector2 speed;
+	Vector2 scale;
+
+	float rot;
 	float rotSpeed;
 
+	bool inMotion = false;
+	
 public:
 	Sprite();
 	~Sprite();
 	Sprite(std::string imagePath);
 	Sprite(std::string imagePath, Vector2 _pos);
 
-	void Update();
-	void Render();
+	void UpdateSprite();
+	void RenderSprite();
 
 	void SetPos(Vector2 _pos);
 	
@@ -37,6 +38,7 @@ public:
 	void SetScaleTo(Vector2 v);        //asymetric scale
 	void SetScaleBy(float xy);
 	void SetScaleBy(Vector2 v);
+	void SetSizeTo(Vector2 _size);
 	
 	void SetSpeedTo(Vector2 _vec);     //pixels per game speed (can be fraction)
 	void SetSpeedBy(Vector2 _vec);
@@ -45,13 +47,8 @@ public:
 	
 	float GetValue(char flag) const;         //position: x,y,r; scale: a,b (a = scale x, b = scale y)
 	float GetAxisSpeed(char flag) const;         //x, y, r (rotation)
+	Texture GetTexture() const;
 
-	//exposes private side of class (needs to be changed)
-	Vector2 *GetSpeed();
-	Vector2 *GetPos();
-	float *GetRot();
-	Vector2 *GetScale();
-	Vector2 *GetSize();
 
 	void UpdateMotionStatus();
 
