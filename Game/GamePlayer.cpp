@@ -8,7 +8,8 @@ GamePlayer::GamePlayer()
 GamePlayer::GamePlayer(Sprite& _sprite)
 {
 	sprite = _sprite;
-	rb.Initialize(0.01F, 0.2F, sprite.GetPos(), sprite.GetRot(), sprite.GetScale(), sprite.GetSize());
+	rb.Initialize(0.01F, 1.01F, sprite.GetPos(), sprite.GetRot(),
+		sprite.GetScale(), sprite.GetSize(), sprite.GetSpeed());
 }
 
 void GamePlayer::Update()

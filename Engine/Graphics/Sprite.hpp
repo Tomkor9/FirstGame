@@ -44,9 +44,10 @@ public:
 	void StopSpeed(std::string flags = "xyzr");
 	
 	float GetValue(char flag) const;         //position: x,y,r; scale: a,b (a = scale x, b = scale y)
-	float GetSpeed(char flag) const;         //x, y, r (rotation)
+	float GetAxisSpeed(char flag) const;         //x, y, r (rotation)
 
 	//exposes private side of class (needs to be changed)
+	Vector2 *GetSpeed();
 	Vector2 *GetPos();
 	float *GetRot();
 	Vector2 *GetScale();

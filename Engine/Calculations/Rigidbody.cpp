@@ -2,13 +2,13 @@
 #include "../Engine.hpp"
 
 Rigidbody::Rigidbody() {
-	friction = 1;  //(float) 1 - no friction, 0 - full friction
-	gravity = 0;
+	friction = 1.0F;  // 0.9 - add speed, 1 - no friction, 1.1 - more friction
+	gravity = 0.0F;   // -0.1 - revert gravity, 0 - no gravity, 0.1 - normal grav
 	borders = false;
 }
 
 void Rigidbody::Initialize(float _gravity, float _friction, Vector2 *_pos,
-	float *_rot, Vector2 *_scale, Vector2 *_size){
+	float *_rot, Vector2 *_scale, Vector2 *_size, Vector2 *_speed){
 
 	friction = _friction;
 	gravity = _gravity;
@@ -17,18 +17,14 @@ void Rigidbody::Initialize(float _gravity, float _friction, Vector2 *_pos,
 	rot = _rot;
 	scale = _scale;
 	size = _size;
-	//add velocity!
+	velocity = _speed;
 }
 
-//nie dziala
 void Rigidbody::Update(){
-	velocity.x *= friction;
-	velocity.y -= gravity;
+	velocity->x /= friction;
+	velocity->y -= gravity;
 
-	printf("friction %d, velocity.x %d\n", friction, velocity.x);
-	printf("gravity %d, velocity.y %d\n", gravity, velocity.y);
-
-	*pos += velocity;
+	*pos += *velocity;
 }
 
 void Rigidbody::Render(float R, float G, float B){
@@ -60,10 +56,20 @@ void Rigidbody::Render(float R, float G, float B){
 }
 
 void Rigidbody::AddForce(Vector2 force) {
-	velocity += force;
+	*velocity += force;
 }
 
 void Rigidbody::DrawBorders(bool state)
 {
 	borders = state;
+}
+
+void Rigidbody::SetFriction(float fric)
+{
+	friction = fric;
+}
+
+void Rigidbody::SetGravity(float grav)
+{
+	friction = grav;
 }

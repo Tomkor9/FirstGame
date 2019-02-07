@@ -124,7 +124,7 @@ float Sprite::GetValue(char flag) const {
 }
 
 //x, y, r (rotation)
-float Sprite::GetSpeed(char flag) const {
+float Sprite::GetAxisSpeed(char flag) const {
 	switch (flag)
 	{
 	case 'x': return speed.x; break;
@@ -154,6 +154,13 @@ Vector2 * Sprite::GetSize()
 {
 	return &size;
 }
+
+Vector2 * Sprite::GetSpeed()
+{
+	return &speed;
+}
+
+//---------------------------------------
 
 void Sprite::ShowInfo() {
 	std::cout << std::setprecision(5) <<
