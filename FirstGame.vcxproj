@@ -138,31 +138,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Calculations\Rigidbody.hpp" />
     <ClInclude Include="Engine\Calculations\Vector2.hpp" />
     <ClInclude Include="Engine\Engine.hpp" />
     <ClInclude Include="Engine\Log\Elog.hpp" />
     <ClInclude Include="Engine\IO\Keyboard.hpp" />
     <ClInclude Include="Engine\IO\Mouse.hpp" />
     <ClInclude Include="Engine\Timer.hpp" />
-    <ClInclude Include="Graphics\Sprite.hpp" />
-    <ClInclude Include="Graphics\Texture.hpp" />
+    <ClInclude Include="Engine\Graphics\Sprite.hpp" />
+    <ClInclude Include="Engine\Graphics\Texture.hpp" />
+    <ClInclude Include="Game\GamePlayer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Calculations\Rigidbody.cpp" />
     <ClCompile Include="Engine\Calculations\Vector2.cpp" />
     <ClCompile Include="Engine\Log\Elog.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\IO\Keyboard.cpp" />
     <ClCompile Include="Engine\IO\Mouse.cpp" />
     <ClCompile Include="Engine\Timer.cpp" />
-    <ClCompile Include="Graphics\Sprite.cpp" />
-    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Graphics\Sprite.cpp" />
+    <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Game\GamePlayer.cpp" />
     <ClCompile Include="Source\FirstGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="Graphics\SOIL\lib\SOIL.lib" />
+    <Library Include="Engine\Graphics\SOIL\lib\SOIL.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
